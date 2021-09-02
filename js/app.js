@@ -3,16 +3,17 @@ document.getElementById('spinner').style.display = 'none';
 const searchBook = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
+    // clear previous search value 
     searchField.value='';
-
+    const loadBooks= document.getElementById("search-result");
+    //  clear previous page 
+    loadBooks.textContent='';
+    document.getElementById('book-numbers').style.display = 'none';
     document.getElementById('spinner').style.display = 'block';
+
        // Handle empty search request and sppiner
     if (searchText ==='') {
         displayError();
-        const loadBooks= document.getElementById("search-result");
-        loadBooks.textContent='';
-        document.getElementById('book-numbers').style.display = 'none';
-        document.getElementById('spinner').style.display = 'none';
     }
     
     //  fetching data from url 
@@ -27,11 +28,13 @@ const searchBook = () => {
     //    error function
 const displayError = () => {
     document.getElementById('error-message').style.display = 'block';
-    
+    const loadBooks= document.getElementById("search-result");
+        loadBooks.textContent='';
+        document.getElementById('book-numbers').style.display = 'none';
+        document.getElementById('spinner').style.display = 'none'; 
 }
 //  getting search result
 const displaySearchResult = books => {
-    console.log(books); 
     //stop  sppiner after getting result
     document.getElementById('spinner').style.display = 'none';
     const loadBooks= document.getElementById("search-result");
@@ -40,7 +43,6 @@ const displaySearchResult = books => {
     const bookList = books.docs;
     //  show error if there is no book found 
     if(bookList.length===0){
-        document.getElementById('book-numbers').style.display = 'none';
         displayError();
     }
     else{
@@ -64,11 +66,10 @@ const displaySearchResult = books => {
                 <h5 class="card-title text-secondary text-center">Book Writer: ${element.author_name}</h5>
                 <h5 class="card-title text-secondary text-center ">Book Publisher: ${element.publisher}</h5>
                 <h5 class="card-title text-secondary text-center">First Publishing Date: ${element.first_publish_year}</h5>
+            </div>         
             </div>
-            </div>
-    `;
-    loadBooks.appendChild(div);
-
+            `;
+            loadBooks.appendChild(div);
     });
 
 }
