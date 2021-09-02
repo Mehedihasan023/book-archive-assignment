@@ -1,20 +1,23 @@
 document.getElementById('error-message').style.display = 'none';
+document.getElementById('spinner').style.display = 'none';
 const searchBook = () => {
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     searchField.value='';
 
-       // Handle empty search request
+    document.getElementById('spinner').style.display = 'block';
+       // Handle empty search request and sppiner
     if (searchText ==='') {
         displayError();
         const loadBooks= document.getElementById("search-result");
         loadBooks.textContent='';
         document.getElementById('book-numbers').style.display = 'none';
+        document.getElementById('spinner').style.display = 'none';
     }
     
     //  fetching data from url 
     else{
-    const url = `http://openlibrary.org/search.json?q=${searchText}`;
+    const url = `https://openlibrary.org/search.json?q=${searchText}`;
     fetch(url)
         .then(res => res.json())
         .then(data => displaySearchResult(data))
@@ -29,6 +32,8 @@ const displayError = () => {
 //  getting search result
 const displaySearchResult = books => {
     console.log(books); 
+    //stop  sppiner after getting result
+    document.getElementById('spinner').style.display = 'none';
     const loadBooks= document.getElementById("search-result");
     //  clear previous page 
     loadBooks.textContent='';
@@ -45,22 +50,20 @@ const displaySearchResult = books => {
         document.getElementById('book-numbers').innerText =`Books Found ${bookList.length}`;
     }
     bookList.forEach(element => {
-       const loadBooks= document.getElementById("search-result");
-       
-       const books = bookList.indexOf(element);
+    const loadBooks= document.getElementById("search-result");
 
     //    create div to show search result 
 
-       const div = document.createElement('div');
-       div.classList.add('col');
+        const div = document.createElement('div');
+        div.classList.add('col');
             div.innerHTML = `
             <div class="card h-100">
             <img src="https://covers.openlibrary.org/b/id/${element.cover_i}-M.jpg" class="card-img-top w-50 h-50 mx-auto" alt="">
             <div class="card-body overflow-auto" style="height: 200px">
-                <h3 class="card-title text-primary">Book Name: ${element.title}</h3>
-                <h5 class="card-title text-secondary">Book Writer: ${element.author_name}</h5>
-                <h5 class="card-title text-secondary ">Book Publisher: ${element.publisher}</h5>
-                <h5 class="card-title text-secondary">First Publishing Date: ${element.first_publish_year}</h5>
+                <h3 class="card-title text-primary text-center">Book Name: ${element.title}</h3>
+                <h5 class="card-title text-secondary text-center">Book Writer: ${element.author_name}</h5>
+                <h5 class="card-title text-secondary text-center ">Book Publisher: ${element.publisher}</h5>
+                <h5 class="card-title text-secondary text-center">First Publishing Date: ${element.first_publish_year}</h5>
             </div>
             <div class="card-footer">
                 <small class="text-muted">Last updated 3 mins ago</small>
