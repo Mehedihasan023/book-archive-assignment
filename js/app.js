@@ -65,9 +65,6 @@ const displaySearchResult = books => {
                 <h5 class="card-title text-secondary text-center ">Book Publisher: ${element.publisher}</h5>
                 <h5 class="card-title text-secondary text-center">First Publishing Date: ${element.first_publish_year}</h5>
             </div>
-            <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
             </div>
     `;
     loadBooks.appendChild(div);
